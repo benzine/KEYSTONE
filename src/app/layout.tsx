@@ -43,7 +43,11 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const themeBoot = `try{if(localStorage.getItem('kc-theme')==='dark')document.documentElement.classList.add('theme-dark');if(localStorage.getItem('kc-motion')==='reduced')document.documentElement.classList.add('reduced');}catch(e){}`;
+// Pre-paint theme boot: dark is the default. The dark class is applied FIRST
+// and removed only when the visitor explicitly stored "light" (earlier toggles
+// persist; if storage access throws, dark stays). Console marker makes the
+// running build instantly verifiable in F12.
+const themeBoot = `var d=document.documentElement;try{d.classList.add('theme-dark');if(localStorage.getItem('kc-theme')==='light')d.classList.remove('theme-dark');if(localStorage.getItem('kc-motion')==='reduced')d.classList.add('reduced');}catch(e){};console.info('[KC] THEME BOOT · '+(d.classList.contains('theme-dark')?'DARK default':'LIGHT stored'));`;
 
 export default function RootLayout({
   children,

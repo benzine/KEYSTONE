@@ -45,7 +45,8 @@ export const kcStore = {
 
 export function loadSettings(prefersReduced: boolean): KcSettings {
   return {
-    theme: kcStore.get("theme", "light") as KcSettings["theme"],
+    /* dark is the house default; a stored choice (either way) still wins */
+    theme: kcStore.get("theme", "dark") as KcSettings["theme"],
     motion: kcStore.get("motion", prefersReduced ? "reduced" : "full") as KcSettings["motion"],
     type: kcStore.get("type", "a") as KcSettings["type"],
     cursor: kcStore.get("cursor", "blueprint") as KcSettings["cursor"],
@@ -55,7 +56,7 @@ export function loadSettings(prefersReduced: boolean): KcSettings {
 /* ---------- settings as an external store (useSyncExternalStore) ---------- */
 
 export const DEFAULT_SETTINGS: KcSettings = {
-  theme: "light",
+  theme: "dark",
   motion: "full",
   type: "a",
   cursor: "blueprint",
